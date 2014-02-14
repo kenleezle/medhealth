@@ -1,5 +1,5 @@
 package com.Hackathon.medhealth;
-
+/*
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +54,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
 			    	//KEY_TYPE + " TEXT," +	
 			    	
 			    
-					/*
+					
 					KEY_TIME_ISENABLED + " TEXT," +
 					KEY_TIME_START_HOUR + " TEXT," +
 					KEY_TIME_START_MINUTE + " TEXT," +
 					KEY_TIME_END_HOUR + " TEXT," +
 					KEY_TIME_END_MINUTE + " TEXT," +
-					*/
+		
 					
 					
 		    	")";
@@ -668,4 +668,4 @@ public class DatabaseHandler extends SQLiteOpenHelper
         return DatabaseUtils.queryNumEntries(db, TABLE_WAITLIST);
     }
     
-}
+}*/
