@@ -14,58 +14,44 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnItemClickListener{
 
 
-	String []ContactNames;//={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
-
-	int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10}; 
 	
-	ListView l;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.contacts);
+		setContentView(R.layout.activity_main);
 
-		Resources res=getResources();
-		ContactNames=res.getStringArray(R.array.titles);
+		Button b1 = (Button) findViewById(R.id.button1);
+		b1.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View v) {
+		        // Do something in response to button click
+		    	try{
+		    	     Intent k = new Intent(); //
+		    	     k.setClass(MainActivity.this, Contacts.class);
+		    	     startActivity(k);
+		    	}catch(Exception e){
+		    	}
+		    	
+		    	}
+		    
+		});
 		
-		l=(ListView) findViewById(R.id.listView1);
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.single_row, R.id.textView, ContactNames);
-		l.setAdapter(adapter);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
-		// TODO Auto-generated method stub
-		String str=adapter.getItemAtPosition(position).toString(); //getting the names from the previous string
-		//Create here an intent to go to another activity.
-		//For now we will only display a toast (showing their names only
-		Toast.makeText(this, str, Toast.LENGTH_SHORT).show(); 
-		}
-	
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		new MenuInflater(this).inflate(R.menu.option, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		if (item.getItemId()==R.id.add){
-			startActivity(new Intent(this, contactinfo.class));
-			return (true);
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 
 
