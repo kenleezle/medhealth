@@ -13,7 +13,7 @@
         android:adjustViewBounds="true"
         android:padding="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/save_icon" />
+        android:src="@drawable/save" />
 
     <GridLayout 
         android:id="@+id/linearLayout1"
@@ -37,7 +37,7 @@
             android:adjustViewBounds="true"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:src="@drawable/prescription_icon" />
+            android:src="@drawable/prescription" />
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -46,7 +46,7 @@
             android:adjustViewBounds="true"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:src="@drawable/guardian_icon" />
+            android:src="@drawable/guardians" />
 
         <ImageButton
             android:id="@+id/imageButton3"
@@ -57,7 +57,7 @@
             android:adjustViewBounds="true"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:src="@drawable/records_icon" />
+            android:src="@drawable/records" />
     </GridLayout>
 
     <ImageView
