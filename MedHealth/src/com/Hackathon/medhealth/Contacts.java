@@ -40,7 +40,8 @@ public class Contacts extends Activity implements OnItemClickListener{
 		ContactNames=res.getStringArray(R.array.titles);
 		
 		l=(ListView) findViewById(R.id.listView1);
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.single_row, R.id.textView, ContactNames);
+		//ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.single_row, R.id.textView, ContactNames);
+		myAdapter adapter= new myAdapter(this, ContactNames, images);
 		l.setAdapter(adapter);
 		
 	}
@@ -48,9 +49,14 @@ public class Contacts extends Activity implements OnItemClickListener{
 	class myAdapter extends ArrayAdapter<String>
 	{
 		Context context;
-		myAdapter(Context c, String[] titles)
+		int []images;
+		String []titleArray;
+		myAdapter(Context c, String[] titles, int imgs[])
 		{
 			super(c,R.layout.single_row,R.id.textView, titles);
+			this.context=c;
+			this.images=imgs;
+			this.titleArray=titles;
 		}
 		
 		@Override
@@ -61,7 +67,12 @@ public class Contacts extends Activity implements OnItemClickListener{
 			ImageView myImage= (ImageView) row.findViewById(R.id.imageView1);
 			TextView myTitle= (TextView) row.findViewById(R.id.textView);
 			
-			return super.getView(position, convertView, parent);
+			myImage.setImageResource(images[position]);
+			myTitle.setText(titleArray[position]);
+			
+			
+			
+			return row;
 		}
 	}
 
