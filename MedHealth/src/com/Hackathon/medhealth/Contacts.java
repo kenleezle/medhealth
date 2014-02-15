@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class Contacts extends Activity implements OnItemClickListener{
 
 
-	String []ContactNames;//={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
+	String []ContactNames;     //={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
 
 	int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10}; 
 	
@@ -40,7 +40,8 @@ public class Contacts extends Activity implements OnItemClickListener{
 		ContactNames=res.getStringArray(R.array.titles);
 		
 		l=(ListView) findViewById(R.id.listView1);
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.single_row, R.id.textView, ContactNames);
+		//ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.single_row, R.id.textView, ContactNames);
+		myAdapter adapter= new myAdapter(this, ContactNames, images);
 		l.setAdapter(adapter);
 		
 	}
@@ -48,9 +49,14 @@ public class Contacts extends Activity implements OnItemClickListener{
 	class myAdapter extends ArrayAdapter<String>
 	{
 		Context context;
-		myAdapter(Context c, String[] titles)
+		int []images;
+		String []titleArray;
+		myAdapter(Context c, String[] titles, int imgs[])
 		{
 			super(c,R.layout.single_row,R.id.textView, titles);
+			this.context=c;
+			this.images=imgs;
+			this.titleArray=titles;
 		}
 		
 		@Override
@@ -61,13 +67,21 @@ public class Contacts extends Activity implements OnItemClickListener{
 			ImageView myImage= (ImageView) row.findViewById(R.id.imageView1);
 			TextView myTitle= (TextView) row.findViewById(R.id.textView);
 			
-			return super.getView(position, convertView, parent);
+			myImage.setImageResource(images[position]);
+			myTitle.setText(titleArray[position]);
+			
+			
+			
+			return row;
 		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
 		// TODO Auto-generated method stub
+		Intent k = new Intent(Contacts.this, contactinfodisplay.class);
+	     startActivity(k);
+		
 		String str=adapter.getItemAtPosition(position).toString(); //getting the names from the previous string
 		//Create here an intent to go to another activity.
 		//For now we will only display a toast (showing their names only

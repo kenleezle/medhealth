@@ -58,13 +58,14 @@ public class MainActivity extends Activity
 		b1.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {
 		        // Do something in response to button click
-		    	try{
-		    	     Intent k = new Intent(); //
-		    	     k.setClass(MainActivity.this, Contacts.class);
+		    	//try{
+		    	     
+		    	     Intent k = new Intent(MainActivity.this, Contacts.class);
 		    	     startActivity(k);
-		    	}catch(Exception e){
+		    	//}catch(Exception e){
+		    //	}
+		    	
 		    	}
-
 		    	}
 
 		});
