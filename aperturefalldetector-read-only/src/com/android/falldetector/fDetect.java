@@ -6,20 +6,19 @@ import java.util.concurrent.TimeUnit;
 import com.android.falldetector.R;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 
-public class FallDetector extends Activity {
+public class fDetect extends Service {
 	 private TextView accText;
 	 private TextView total;
 	 private TextView maxText;
@@ -37,25 +36,15 @@ public class FallDetector extends Activity {
      
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+    public void onCreate() {
+        super.onCreate();        
              
-        setContentView(R.layout.main);
-        Button a = (Button)findViewById(R.id.button1);
-        a.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				startService(new Intent(getApplicationContext(), fDetect.class));
-				
-				
-			}
-		});
-        accText = (TextView)findViewById(R.id.accText);
-        total = (TextView)findViewById(R.id.total);
-        maxText = (TextView)findViewById(R.id.max);
-        orientText = (TextView)findViewById(R.id.orientText);
+       // setContentView(R.layout.main);
+        
+     //   accText = (TextView)findViewById(R.id.accText);
+     //   total = (TextView)findViewById(R.id.total);
+    //    maxText = (TextView)findViewById(R.id.max);
+     //   orientText = (TextView)findViewById(R.id.orientText);
         
        
         // Set Sensor + Manager
@@ -129,7 +118,7 @@ public class FallDetector extends Activity {
      public void onAccuracyChanged(Sensor sensor, int accuracy) {}
     };
     @Override
-    protected void onResume()
+    /*protected void onResume()
     {
      super.onResume();
      myManager.registerListener(mySensorListener, orientSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -142,5 +131,11 @@ public class FallDetector extends Activity {
     {     
      myManager.unregisterListener(mySensorListener);
      super.onStop();
-    }
+    }*/
+
+	
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

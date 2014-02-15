@@ -17,7 +17,7 @@ import android.media.MediaPlayer;
 
 public class areyouok extends Activity {
 	Button yesButton;
-	Button noButton;
+	//Button noButton;
 	MediaPlayer mp;
 	MediaPlayer great;
 	int countdown = 10;
@@ -31,10 +31,10 @@ public class areyouok extends Activity {
         
         // Capture our button from layout
         yesButton 	= (Button)findViewById( R.id.yesButton );
-        noButton 	= (Button)findViewById( R.id.noButton );
+        //noButton 	= (Button)findViewById( R.id.noButton );
         // Register the onClick listener with the implementation above
         yesButton.setOnClickListener( yesButtonListener );
-        noButton.setOnClickListener( noButtonListener );
+        //noButton.setOnClickListener( noButtonListener );
         mp = MediaPlayer.create(this, R.raw.areyouokay);
         mp.start();
         t.schedule(new nextScreen(), 10000);
@@ -60,7 +60,7 @@ public class areyouok extends Activity {
 			areyouok.this.finish();
         }
     };
-    private OnClickListener noButtonListener = new OnClickListener() {
+   /* private OnClickListener noButtonListener = new OnClickListener() {
         public void onClick(View v) {
 	    	if(mp.isPlaying() == true) 
 	    		mp.stop();
@@ -70,5 +70,5 @@ public class areyouok extends Activity {
 	    	startActivity(notify);
 	    	areyouok.this.finish();
         }
-    };
+    };*/
 }
