@@ -2,9 +2,11 @@ package com.Hackathon.medhealth;
 
 import java.util.Calendar;
 import java.util.List;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 
-
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -63,6 +65,22 @@ public class MainActivity extends Activity
 		    	}
 
 		});
+		// For now this is the save button. This should have its own button.
+	    ImageButton qr = (ImageButton) findViewById(R.id.imageButton1);
+		qr.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+				    Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+				    intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // PRODUCT_MODE for bar codes
+				    startActivityForResult(intent, 0);
+				} catch (Exception e) {
+				    Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+				    Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
+				    startActivity(marketIntent);
+				}
+			}
+		});
 	   
 		DB = new DatabaseHandler(this);
 		alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -95,6 +113,32 @@ public class MainActivity extends Activity
 			}
 			
 			
+		}
+	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+            String contents = data.getStringExtra("SCAN_RESULT");
+            saveMedicinesFromQR(contents);
+		}
+	}
+	protected void saveMedicinesFromQR(String qrcontents) {
+		Log.i("QR", "Received Result Data "+qrcontents);
+		try {
+			JSONObject jcontents = new JSONObject(qrcontents);
+			JSONArray jmeds = jcontents.getJSONArray("meds");
+			for (int i = 0; i < jmeds.length(); i++) {
+				JSONObject jmed = jmeds.getJSONObject(i); 
+				Log.i("QR", "Received Name "+ jmed.getString("name"));			
+				Log.i("QR", "Received Color "+jmed.getString("color"));
+				JSONArray jtimes = jmed.getJSONArray("times");
+				for (int j = 0; j < jtimes.length(); j++) {
+					String jtime = (String) jtimes.get(j); 
+					Log.i("QR", "Received Time "+jtime);	
+				}
+			}
+		}
+		catch (Exception e) {
+			Log.e("QR", e.toString());
 		}
 	}
 }
