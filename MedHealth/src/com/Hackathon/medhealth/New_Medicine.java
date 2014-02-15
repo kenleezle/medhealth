@@ -9,6 +9,7 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,8 +29,8 @@ public class New_Medicine extends Activity
 {
 	private static final int	REQUEST_TIME		= 6382; // onActivityResult request code
 	EditText name, comment;
-	DatabaseHandler DB;
-	TimingsHandler	TH;
+	//DatabaseHandler DB;
+	// TimingsHandler	TH;
 	Button add, type, color, timing;
 	AlertDialog.Builder color_builder, Type_builder, Timing_builder;
 	CharSequence colors[] = {"Red", "White", "purple", "Blue", "Yellow", "Green", "Brown"};
@@ -37,10 +38,63 @@ public class New_Medicine extends Activity
 	int Target_Quantity, time_hour, time_min, no_Timings = 0;
 	String Color = "Red";
 	String Type = "Pill";
+	/*
 	Intent intent;
 	PendingIntent alarmIntent;
+	*/
 	List <Timing> MyTimings;
 	
+	public static void addMedicineAndTimingsToDB(String name,String comment,String color_path,String img_path,List<Timing> MyTimings, Context context) {
+		Intent intent;
+		PendingIntent alarmIntent;
+		DatabaseHandler DB;
+		TimingsHandler	TH;
+		
+		DB = new DatabaseHandler(context);
+		TH = new TimingsHandler(context);
+
+
+		Medicine new_medicine = new Medicine(name,context);
+		new_medicine.comment = comment;
+		new_medicine.color_path = color_path;
+		new_medicine.img_path = img_path;
+		new_medicine.timings_table = new_medicine.name; //chunk
+		DB.addMedicine(new_medicine);
+		
+		
+		for(Timing N : MyTimings)
+			TH.addTiming(N, new_medicine.name);
+		
+		
+		List<Medicine> MList = DB.getAllMedicines(context);
+		int request = 0;
+		for (Medicine t : MList)
+		{
+			
+			List<Timing> TList = t.get_timings(context);
+			for (Timing tt : TList)
+			{
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(System.currentTimeMillis());
+				calendar.set(Calendar.HOUR_OF_DAY,tt.Time_Hour);
+				calendar.set(Calendar.MINUTE, tt.Time_Min);
+				calendar.set(Calendar.SECOND, 0);
+				
+				
+				
+				intent = new Intent(context, Service_Medicine_time.class);
+				alarmIntent = PendingIntent.getService(context, request , intent, 0);
+				
+				AlarmManager alarmMgr; 
+				alarmMgr = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+				alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+				request++;
+			}
+		}
+		Toast toast = Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT);
+		toast.show();
+			
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -49,7 +103,7 @@ public class New_Medicine extends Activity
 		setContentView(R.layout.new_medicine);
 		
 		
-		TH = new TimingsHandler(this);
+		//TH = new TimingsHandler(this);
 		name = (EditText) findViewById(R.id.text_name);
 		comment = (EditText) findViewById(R.id.comment);
 		timing = (Button) findViewById(R.id.btn_Timing);
@@ -59,7 +113,6 @@ public class New_Medicine extends Activity
 		
 		
 		
-		DB = new DatabaseHandler(this);
 		
 		MyTimings = new ArrayList<Timing>();
 		
@@ -143,46 +196,7 @@ public class New_Medicine extends Activity
 				}
 				else
 				{
-					Medicine new_medicine = new Medicine(name.getText().toString(), getApplicationContext());
-					new_medicine.comment = comment.getText().toString();
-					new_medicine.color_path = Color;
-					new_medicine.img_path = Type;
-					new_medicine.timings_table = new_medicine.name; //chunk
-					DB.addMedicine(new_medicine);
-					
-					
-					for(Timing N : MyTimings)
-						TH.addTiming(N, new_medicine.name);
-					
-					
-					List<Medicine> MList = DB.getAllMedicines(getApplicationContext());
-					int request = 0;
-					for (Medicine t : MList)
-					{
-						
-						List<Timing> TList = t.get_timings(getApplicationContext());
-						for (Timing tt : TList)
-						{
-							Calendar calendar = Calendar.getInstance();
-							calendar.setTimeInMillis(System.currentTimeMillis());
-							calendar.set(Calendar.HOUR_OF_DAY,tt.Time_Hour);
-							calendar.set(Calendar.MINUTE, tt.Time_Min);
-							calendar.set(Calendar.SECOND, 0);
-							
-							
-							
-							intent = new Intent(getApplicationContext(), Service_Medicine_time.class);
-							alarmIntent = PendingIntent.getService(getApplicationContext(), request , intent, 0);
-							
-							AlarmManager alarmMgr; 
-							alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
-							alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
-							request++;
-						}
-						
-						
-					}
-					
+					addMedicineAndTimingsToDB(name.getText().toString(),comment.getText().toString(),Color,Type,MyTimings,getApplicationContext());											
 					finish();
 				}
 					
@@ -204,6 +218,7 @@ public class New_Medicine extends Activity
 
 
 	}
+
 	
 	public Dialog onCreateDialog(Bundle savedInstanceState) 
 	{

@@ -1,5 +1,6 @@
 package com.Hackathon.medhealth;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.json.JSONObject;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity
 	AlarmManager alarmMgr;
 	Calendar		calendar;
 
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -129,13 +131,38 @@ public class MainActivity extends Activity
 			JSONArray jmeds = jcontents.getJSONArray("meds");
 			for (int i = 0; i < jmeds.length(); i++) {
 				JSONObject jmed = jmeds.getJSONObject(i); 
-				Log.i("QR", "Received Name "+ jmed.getString("name"));			
-				Log.i("QR", "Received Color "+jmed.getString("color"));
+				String name = jmed.getString("name");
+				String comment = jmed.getString("comment");
+				String color = jmed.getString("color");
+				String pill_type = jmed.getString("pill_type");
+
+				Log.i("QR", "Received Name "+ name);			
+				Log.i("QR", "Received Color "+color);
+				Log.i("QR", "Received comment "+comment);
+				Log.i("QR", "Received pill type "+pill_type);
+
 				JSONArray jtimes = jmed.getJSONArray("times");
+				List<Timing> timings_list = new ArrayList<Timing>();
 				for (int j = 0; j < jtimes.length(); j++) {
-					String jtime = (String) jtimes.get(j); 
-					Log.i("QR", "Received Time "+jtime);	
+					JSONObject jtime = jtimes.getJSONObject(j); 
+					Log.i("QR", "Received Time "+jtime);
+
+					int quantity = jtime.getInt("quantity");
+					int hour = jtime.getInt("hour");
+					int minute = jtime.getInt("minute");
+					
+					Log.i("QR", "Received quantity "+quantity);
+					Log.i("QR", "Received hour "+hour);
+					Log.i("QR", "Received minute "+minute);
+					
+					Timing new_timing = new Timing();
+					new_timing.Med_quantity = quantity;
+					new_timing.Time_Hour = hour;
+					new_timing.Time_Min = minute;
+					timings_list.add(new_timing);	
 				}
+				New_Medicine new_medicine = new New_Medicine();
+				new_medicine.addMedicineAndTimingsToDB(name,comment,color,pill_type,timings_list,getApplicationContext());											
 			}
 		}
 		catch (Exception e) {
