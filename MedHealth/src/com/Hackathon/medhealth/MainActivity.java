@@ -92,21 +92,27 @@ public class MainActivity extends Activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
             String contents = data.getStringExtra("SCAN_RESULT");
-			Log.i("QR", "Received Result Data "+contents);
-			try {
-				JSONObject jcontents = new JSONObject(contents);
-				JSONArray jmeds = jcontents.getJSONArray("meds");
-				for (int i = 0; i < jmeds.length(); i++) {
-					JSONObject jmed = jmeds.getJSONObject(i); 
-					Log.i("QR", "Received Name "+ jmed.getString("name"));			
-					Log.i("QR", "Received Color "+jmed.getString("color"));
+            saveMedicinesFromQR(contents);
+		}
+	}
+	protected void saveMedicinesFromQR(String qrcontents) {
+		Log.i("QR", "Received Result Data "+qrcontents);
+		try {
+			JSONObject jcontents = new JSONObject(qrcontents);
+			JSONArray jmeds = jcontents.getJSONArray("meds");
+			for (int i = 0; i < jmeds.length(); i++) {
+				JSONObject jmed = jmeds.getJSONObject(i); 
+				Log.i("QR", "Received Name "+ jmed.getString("name"));			
+				Log.i("QR", "Received Color "+jmed.getString("color"));
+				JSONArray jtimes = jmed.getJSONArray("times");
+				for (int j = 0; j < jtimes.length(); j++) {
+					String jtime = (String) jtimes.get(j); 
+					Log.i("QR", "Received Time "+jtime);	
 				}
 			}
-			catch (Exception e) {
-				Log.e("QR", e.toString());
-			}
-			
-
+		}
+		catch (Exception e) {
+			Log.e("QR", e.toString());
 		}
 	}
 }
