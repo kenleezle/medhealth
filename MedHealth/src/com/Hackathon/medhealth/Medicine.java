@@ -22,6 +22,7 @@ public class Medicine
 	String color_path;
 	String img_path;
 	String comment;
+	String timings_table;
 	
 	public Medicine()
 	{
@@ -31,6 +32,24 @@ public class Medicine
 		this.img_path = "";
 		this.noti_isactive = 0;
 		this.color_path = "";
+		this.timings_table = "";
+	}
+	
+	public void Add_timing(int start, int finish, int Quantity, Context context)
+	{
+		Timing new_Timing = new Timing();
+		new_Timing.Time_Hour = start;
+		new_Timing.Time_Min = finish;
+		new_Timing.Med_quantity = Quantity;
+		TimingsHandler handler = new TimingsHandler(context, timings_table);
+		handler.addTiming(new_Timing);
+	}
+	
+	List<Timing> get_timings(Context context)
+	{
+		TimingsHandler handler = new TimingsHandler(context, timings_table);
+		return handler.getAllTimings();
+		
 	}
 	
 	
@@ -39,5 +58,6 @@ public class Medicine
 	
 	
 }
+
 
 
