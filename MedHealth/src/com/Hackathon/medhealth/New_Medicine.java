@@ -1,11 +1,14 @@
 package com.Hackathon.medhealth;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,22 +34,30 @@ public class New_Medicine extends Activity
 	AlertDialog.Builder color_builder, Type_builder, Timing_builder;
 	CharSequence colors[] = {"Red", "White", "purple", "Blue", "Yellow", "Green", "Brown"};
 	CharSequence Types[] = {"Pill", "Capsule", "injection", "Liquid", "Tablet"};
-	int Target_Quantity, time_hour, time_min = 0;
-	String Color, Type = "";
+	int Target_Quantity, time_hour, time_min, no_Timings = 0;
+	String Color = "Red";
+	String Type = "Pill";
+	Intent intent;
+	PendingIntent alarmIntent;
 	List <Timing> MyTimings;
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_medicine);
 		
+		
+		TH = new TimingsHandler(this);
 		name = (EditText) findViewById(R.id.text_name);
 		comment = (EditText) findViewById(R.id.comment);
 		timing = (Button) findViewById(R.id.btn_Timing);
 		color = (Button) findViewById(R.id.btn_color);
 		type = (Button) findViewById(R.id.btn_type);
 		add = (Button) findViewById(R.id.btn_add);
+		
+		
 		
 		DB = new DatabaseHandler(this);
 		
@@ -126,21 +137,57 @@ public class New_Medicine extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				
-				Medicine new_medicine = new Medicine();
-				new_medicine.name = name.getText().toString();
-				new_medicine.comment = comment.getText().toString();
-				new_medicine.color_path = Color;
-				new_medicine.img_path = Type;
-				new_medicine.timings_table = new_medicine.name;
-				
-				TimingsHandler TH = new TimingsHandler(getApplicationContext(), new_medicine.name);
-				DB.addMedicine(new_medicine);
-				for(Timing N : MyTimings)
+				if (no_Timings == 0 || name.getText().toString().isEmpty())
 				{
-					TH.addTiming(N);
+					Toast.makeText(getApplicationContext(), "invalid Arguments", Toast.LENGTH_SHORT).show();
 				}
+				else
+				{
+					Medicine new_medicine = new Medicine(name.getText().toString(), getApplicationContext());
+					new_medicine.comment = comment.getText().toString();
+					new_medicine.color_path = Color;
+					new_medicine.img_path = Type;
+					new_medicine.timings_table = new_medicine.name; //chunk
+					DB.addMedicine(new_medicine);
+					
+					
+					for(Timing N : MyTimings)
+						TH.addTiming(N, new_medicine.name);
+					
+					
+					List<Medicine> MList = DB.getAllMedicines(getApplicationContext());
+					int request = 0;
+					for (Medicine t : MList)
+					{
+						
+						List<Timing> TList = t.get_timings(getApplicationContext());
+						for (Timing tt : TList)
+						{
+							Calendar calendar = Calendar.getInstance();
+							calendar.setTimeInMillis(System.currentTimeMillis());
+							calendar.set(Calendar.HOUR_OF_DAY,tt.Time_Hour);
+							calendar.set(Calendar.MINUTE, tt.Time_Min);
+							calendar.set(Calendar.SECOND, 0);
+							
+							
+							
+							intent = new Intent(getApplicationContext(), Service_Medicine_time.class);
+							alarmIntent = PendingIntent.getService(getApplicationContext(), request , intent, 0);
+							
+							AlarmManager alarmMgr; 
+							alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
+							alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+							request++;
+						}
+						
+						
+					}
+					
+					finish();
+				}
+					
 				
+				/*
 				Medicine X = DB.GetMedicineByID(1);
 				List <Timing> test_list = X.get_timings(getApplicationContext());
 				
@@ -149,7 +196,7 @@ public class New_Medicine extends Activity
 					Log.d("TAG", "Time: " + t.Time_Hour + ":" + t.Time_Min);
 				}
 				
-				
+				*/
 			}
 			
 		});
@@ -208,6 +255,8 @@ public class New_Medicine extends Activity
 					Log.d("TAG", "Q: " + Target_Quantity);
 					Log.d("TAG", "H: " + time_hour);
 					Log.d("TAG", "m: " + time_min);
+					
+					no_Timings++;
 				}
 			}
 		}

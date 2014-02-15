@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class New_Timing extends Activity
 {
@@ -41,7 +42,7 @@ public class New_Timing extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				// TODO Auto-generated method stub
+				finish();
 				
 			}
 		});
@@ -59,14 +60,12 @@ public class New_Timing extends Activity
 				time_hour = time.getCurrentHour();
 				time_min = time.getCurrentMinute();
 				
-				
 				Intent intent_result = new Intent(getApplicationContext(),New_Medicine.class);
 				intent_result.putExtra("Time_Hour", time_hour);
 				intent_result.putExtra("Time_Min", time_min);
 				intent_result.putExtra("Quanity", Target_Quantity);
 				setResult(RESULT_OK,intent_result);     
 				finish();
-				
 			}
 		});
 		

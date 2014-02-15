@@ -94,7 +94,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
  
     
     // Find a specific row in the table using its ID.
-    Medicine GetMedicineByID(int id) 
+    Medicine GetMedicineByID(int id, Context context) 
 	{
     	// to look for a row in the SQL table, we need a Cursor object that uses array of strings with the table's columns. 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -116,7 +116,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
  
         
         // after we find the row you add its values in a Profile object Which is the function we made....
-        Medicine Target_profile = new Medicine();
+        Medicine Target_profile = new Medicine("temp", context);
         Target_profile.id = Integer.parseInt(cursor.getString(0));
         Target_profile.name = cursor.getString(1);
         Target_profile.noti_isactive = Integer.parseInt(cursor.getString(2));
@@ -130,7 +130,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
      
     
     // generate a list with All Profiles
-    public List<Medicine> getAllMedicines() 
+    public List<Medicine> getAllMedicines(Context context) 
 	{
     	// a List object s kinda like an array but a little different.
         List<Medicine> MedicinesList = new ArrayList<Medicine>();
@@ -143,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		{
             do 
 			{
-            	Medicine Target_profile = new Medicine();
+            	Medicine Target_profile = new Medicine("temp", context);
                 Target_profile.id = Integer.parseInt(cursor.getString(0));
                 Target_profile.name = cursor.getString(1);
                 Target_profile.noti_isactive = Integer.parseInt(cursor.getString(2));
