@@ -43,6 +43,21 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		    
 		});
 		
+		Button b2 = (Button) findViewById(R.id.button2);
+		b2.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View v) {
+		        // Do something in response to button click
+		    	//try{
+		    	     
+		    	     Intent k = new Intent(MainActivity.this, contactinfodisplay.class);
+		    	     startActivity(k);
+		    	//}catch(Exception e){
+		    //	}
+		    	
+		    	}
+		    
+		});
+		
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class contactinfodisplay extends Activity{
 	
@@ -14,7 +15,7 @@ public class contactinfodisplay extends Activity{
 		
 		
 		
-		Button b1 = (Button) findViewById(R.id.editButton);
+		ImageButton b1 = (ImageButton) findViewById(R.id.editButton);
 		b1.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {
 		        // Do something in response to button click
