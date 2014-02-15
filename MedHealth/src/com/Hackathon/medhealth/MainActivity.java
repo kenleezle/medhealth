@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -67,8 +68,30 @@ public class MainActivity extends Activity
 		    	}
 
 		});
+		// For now this is the save button. This should have its own button.
+	    ImageButton qr = (ImageButton) findViewById(R.id.imageButton1);
+		qr.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+				    Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+				    intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // PRODUCT_MODE for bar codes
+				    startActivityForResult(intent, 0);
+				} catch (Exception e) {
+				    Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+				    Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
+				    startActivity(marketIntent);
+				}
+			}
+		});
 	   
 	    Intent intent = new Intent(this, Service_Medicine_time.class);
 	    alarmIntent = PendingIntent.getService(this, 0, intent, 0);
+	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+            String contents = data.getStringExtra("SCAN_RESULT");
+			Log.i("QR", "Received Result Data "+contents);
+		}
 	}
 }
