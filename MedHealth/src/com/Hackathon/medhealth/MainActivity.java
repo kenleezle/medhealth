@@ -3,7 +3,7 @@ package com.Hackathon.medhealth;
 import java.util.Calendar;
 import java.util.List;
 import org.json.JSONObject;
-
+import org.json.JSONArray;
 
 
 import android.net.Uri;
@@ -94,9 +94,13 @@ public class MainActivity extends Activity
             String contents = data.getStringExtra("SCAN_RESULT");
 			Log.i("QR", "Received Result Data "+contents);
 			try {
-				JSONObject jmed = new JSONObject(contents);
-				Log.i("QR", "Received Name "+ jmed.getString("name"));			
-				Log.i("QR", "Received Color "+jmed.getString("color"));
+				JSONObject jcontents = new JSONObject(contents);
+				JSONArray jmeds = jcontents.getJSONArray("meds");
+				for (int i = 0; i < jmeds.length(); i++) {
+					JSONObject jmed = jmeds.getJSONObject(i); 
+					Log.i("QR", "Received Name "+ jmed.getString("name"));			
+					Log.i("QR", "Received Color "+jmed.getString("color"));
+				}
 			}
 			catch (Exception e) {
 				Log.e("QR", e.toString());
