@@ -1,5 +1,9 @@
 package com.Hackathon.medhealth;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -17,56 +21,56 @@ import android.util.Log;
 public class Service_Medicine_time extends Service
 {
 
-	AlarmManager alarmMgr;
-	NotificationManager notimgr;
-	Intent Activity_intent;
-	PendingIntent Activity_pendingintent;
+	NotificationManager			notimgr;
+	Intent						Activity_intent;
+	PendingIntent				Activity_pendingintent;
 	NotificationCompat.Builder	Activity_notification;
-	static MediaPlayer	myMediaPlayer;
-	
+	static MediaPlayer			myMediaPlayer;
+
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
+		Uri tone = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.tone);
 		myMediaPlayer = new MediaPlayer();
-		
-		
-		
-		
+
 		Activity_intent = new Intent(getApplicationContext(), MainActivity.class);
 		Activity_pendingintent = PendingIntent.getActivity(this, 0, Activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		Activity_notification = new NotificationCompat.Builder(this)
-		.setOngoing(true)
-		.setContentTitle("HEY OLD FART!")
+		.setOngoing(true).setContentTitle("HEY!")
 		.setContentText("It's Time to take Medication!")
 		.setContentIntent(Activity_pendingintent)
-		//.setSound(x)
-		.setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher);
-		//.setDefaults(Notification.DEFAULT_ALL);
+		.setAutoCancel(true)
+		.setSmallIcon(R.drawable.ic_launcher);
 		
+		try
+		{
+			myMediaPlayer.setDataSource(getApplicationContext(), tone);
+			myMediaPlayer.prepare();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
-	
+
 	@Override
 	public synchronized void onStart(Intent intent, int startId)
 	{
-		Uri tone  = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.tone );
-		try
-        {
-			myMediaPlayer.setDataSource(getApplicationContext(), tone);
-			myMediaPlayer.prepare();
-            myMediaPlayer.start();
-        }catch(Exception x)
-        {
-        	x.printStackTrace();
-        }
+		Calendar calendar = Calendar.getInstance();
 		
-	
+		Log.d("TAG", "SERVICE START AT " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
+		myMediaPlayer.start();
+		
 		notimgr.notify(20083, Activity_notification.build());
-		
+
 	}
-	
+
 	@Override
-	public IBinder onBind(Intent arg0) {return null;}
+	public IBinder onBind(Intent arg0)
+	{
+		return null;
+	}
 
 }
