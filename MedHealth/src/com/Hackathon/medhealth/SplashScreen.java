@@ -23,7 +23,7 @@ public class SplashScreen extends Activity {
             public void run() {
             	try
             	{
-            	 sleep(1000);
+            	 sleep(3000);
             	 Intent i = new Intent(SplashScreen.this, MainActivity.class);
                  startActivity(i);
             	}catch (Exception e){e.printStackTrace();}
