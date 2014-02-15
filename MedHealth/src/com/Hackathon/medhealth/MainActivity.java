@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,8 +20,9 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnItemClickListener{
 
 
-	String []ContactNames={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
+	String []ContactNames;//={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
 
+	int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10}; 
 	
 	ListView l;
 	
@@ -29,6 +31,9 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contacts);
 
+		Resources res=getResources();
+		ContactNames=res.getStringArray(R.array.titles);
+		
 		l=(ListView) findViewById(R.id.listView1);
 		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.single_row, R.id.textView, ContactNames);
 		l.setAdapter(adapter);
