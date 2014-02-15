@@ -2,6 +2,7 @@ package com.Hackathon.medhealth;
 
 import java.util.Calendar;
 import java.util.List;
+import org.json.JSONObject;
 
 
 
@@ -92,6 +93,16 @@ public class MainActivity extends Activity
 		if (resultCode == Activity.RESULT_OK) {
             String contents = data.getStringExtra("SCAN_RESULT");
 			Log.i("QR", "Received Result Data "+contents);
+			try {
+				JSONObject jmed = new JSONObject(contents);
+				Log.i("QR", "Received Name "+ jmed.getString("name"));			
+				Log.i("QR", "Received Color "+jmed.getString("color"));
+			}
+			catch (Exception e) {
+				Log.e("QR", e.toString());
+			}
+			
+
 		}
 	}
 }
