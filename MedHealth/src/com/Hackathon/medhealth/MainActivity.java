@@ -31,7 +31,8 @@ public class MainActivity extends Activity
 	Intent						Activity_intent;
 	PendingIntent				Activity_pendingintent;
 	ImageButton t;
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -51,6 +52,21 @@ public class MainActivity extends Activity
 
 	      }
 	    });
+	    
+	    ImageButton b1 = (ImageButton) findViewById(R.id.imageButton4);
+		b1.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View v) {
+		        // Do something in response to button click
+		    	try{
+		    	     Intent k = new Intent(); //
+		    	     k.setClass(MainActivity.this, Contacts.class);
+		    	     startActivity(k);
+		    	}catch(Exception e){
+		    	}
+
+		    	}
+
+		});
 	   
 	    Intent intent = new Intent(this, Service_Medicine_time.class);
 	    alarmIntent = PendingIntent.getService(this, 0, intent, 0);

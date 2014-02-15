@@ -34,6 +34,8 @@
         
         <service android:name="Service_Medicine_time" >
         </service>
+        <activity android:name="Contacts"></activity>
+        <activity android:name="contactinfo"></activity>
     </application>
 
 </manifest>
