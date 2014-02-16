@@ -54,6 +54,12 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
         </activity>
         
+         <activity
+            android:name="com.Hackathon.medhealth.MedicineTakingScreen"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        
         <service android:name="Service_Medicine_time" >
         </service>
 

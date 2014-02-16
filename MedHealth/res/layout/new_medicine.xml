@@ -18,7 +18,7 @@
         <RelativeLayout
             android:id="@+id/RelativeLayout1"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="499dp"
             android:orientation="vertical" >
 
             <EditText
@@ -41,37 +41,54 @@
                 android:ems="10"
                 android:hint="Comment" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_color"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="150px"
                 android:layout_below="@+id/comment"
-                android:layout_weight="0.42"
-                android:text="Color" />
+                android:layout_weight="1"
+                android:background="@drawable/colorr"
+                android:cropToPadding="false"
+                android:fitsSystemWindows="false"
+                android:focusableInTouchMode="true"
+                android:scaleType="fitEnd" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_type"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="150px"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/btn_color"
-                android:text="Type" />
+                android:background="@drawable/type" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_Timing"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150px"
                 android:layout_below="@+id/btn_type"
-                android:text="Add Time" />
+                android:background="@drawable/addtime" />
 
-            <Button
+            <ImageButton
+                android:id="@+id/btn_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="150px"
+                android:layout_below="@+id/btn_Timing"
+                android:layout_weight="1"
+                android:background="@drawable/qr"
+                android:cropToPadding="false"
+                android:fitsSystemWindows="false"
+                android:focusableInTouchMode="true"
+                android:scaleType="fitEnd" />
+
+            <ImageButton
                 android:id="@+id/btn_add"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_Timing"
-                android:text="Add" />
+                android:layout_height="210px"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/btn_qr"
+                android:background="@drawable/add" />
 
         </RelativeLayout>
 
