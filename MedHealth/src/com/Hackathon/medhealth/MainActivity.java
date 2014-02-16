@@ -137,9 +137,7 @@ public class MainActivity extends Activity
 		
 	
     // For now this is the save button. This should have its own button.
-/*
-      ImageButton qr = (ImageButton) findViewById(R.id.imageButton1);
-    qr.setOnClickListener(new Button.OnClickListener() {
+    medRec.setOnClickListener(new Button.OnClickListener() {
       @Override
       public void onClick(View v) {
         try {
@@ -153,7 +151,6 @@ public class MainActivity extends Activity
         }
       }
     });
-*/
      
     DB = new DatabaseHandler(this);
     alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
