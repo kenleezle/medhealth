@@ -36,6 +36,7 @@ public class New_Timing extends Activity
 		time = (TimePicker) findViewById(R.id.timePicker1);
 		
 		
+		
 		cancel.setOnClickListener(new OnClickListener()
 		{
 			
@@ -56,16 +57,24 @@ public class New_Timing extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Target_Quantity = Integer.parseInt(Quantity.getText().toString());
-				time_hour = time.getCurrentHour();
-				time_min = time.getCurrentMinute();
+				if (Quantity.getText().toString().isEmpty())
+				{
+					Toast.makeText(getApplicationContext(), "Invalid arguments", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					Target_Quantity = Integer.parseInt(Quantity.getText().toString());
+					time_hour = time.getCurrentHour();
+					time_min = time.getCurrentMinute();
+					
+					Intent intent_result = new Intent(getApplicationContext(),New_Medicine.class);
+					intent_result.putExtra("Time_Hour", time_hour);
+					intent_result.putExtra("Time_Min", time_min);
+					intent_result.putExtra("Quanity", Target_Quantity);
+					setResult(RESULT_OK,intent_result);     
+					finish();
+				}
 				
-				Intent intent_result = new Intent(getApplicationContext(),New_Medicine.class);
-				intent_result.putExtra("Time_Hour", time_hour);
-				intent_result.putExtra("Time_Min", time_min);
-				intent_result.putExtra("Quanity", Target_Quantity);
-				setResult(RESULT_OK,intent_result);     
-				finish();
 			}
 		});
 		

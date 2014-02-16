@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
@@ -26,44 +27,51 @@ public class Service_Medicine_time extends Service
 	PendingIntent				Activity_pendingintent;
 	NotificationCompat.Builder	Activity_notification;
 	static MediaPlayer			myMediaPlayer;
+	Bundle bundle;
 
+	@Override
+	public int onStartCommand (Intent intent, int flags, int startId)
+	{
+	     super.onStartCommand(intent, flags, startId);
+	     bundle = intent.getExtras();
+	     
+	     Uri tone = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.tone);
+			myMediaPlayer = new MediaPlayer();
+			
+			
+			
+			Activity_intent = new Intent(getApplicationContext(), MedicineTakingScreen.class);
+			Activity_intent.putExtras(bundle);
+			Activity_pendingintent = PendingIntent.getActivity(this, 0, Activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+			notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			Activity_notification = new NotificationCompat.Builder(this)
+			.setOngoing(true)
+			.setContentTitle("HEY!")
+			.setContentText("It's Time to take Medication!")
+			.setContentIntent(Activity_pendingintent)
+			.setSound(tone)
+			.setSmallIcon(R.drawable.ic_launcher);
+			
+			Calendar calendar = Calendar.getInstance();
+			
+			Log.d("TAG", "SERVICE START AT " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
+			
+			notimgr.notify(20083, Activity_notification.build());
+	     
+		return startId;
+	}
+	
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		Uri tone = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.tone);
-		myMediaPlayer = new MediaPlayer();
-
-		Activity_intent = new Intent(getApplicationContext(), MainActivity.class);
-		Activity_pendingintent = PendingIntent.getActivity(this, 0, Activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		Activity_notification = new NotificationCompat.Builder(this)
-		.setOngoing(true).setContentTitle("HEY!")
-		.setContentText("It's Time to take Medication!")
-		.setContentIntent(Activity_pendingintent)
-		.setAutoCancel(true)
-		.setSmallIcon(R.drawable.ic_launcher);
 		
-		try
-		{
-			myMediaPlayer.setDataSource(getApplicationContext(), tone);
-			myMediaPlayer.prepare();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override
 	public synchronized void onStart(Intent intent, int startId)
 	{
-		Calendar calendar = Calendar.getInstance();
-		
-		Log.d("TAG", "SERVICE START AT " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
-		myMediaPlayer.start();
-		
-		notimgr.notify(20083, Activity_notification.build());
+
 
 	}
 

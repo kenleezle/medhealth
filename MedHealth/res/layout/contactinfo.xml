@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="507dp"
         android:orientation="vertical" >
-
+        
     <QuickContactBadge
         android:id="@+id/quickContactBadge1"
         android:layout_marginLeft="10dp"
@@ -112,29 +112,34 @@
         android:ems="10"
         />
 
-    <ImageButton
-        android:id="@+id/CancelB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/editText5"
-        android:layout_toRightOf="@+id/SaveB"
-        android:src="@drawable/ic_launcher" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-    </RelativeLayout>
-
-    <ImageButton
-        android:id="@+id/SaveB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_launcher" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editText5" >
 
+        <ImageButton
+            android:id="@+id/CancelB"
+            android:layout_width="180dp"
+            android:layout_height="70sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/SaveB"
+            android:background="@drawable/cancel" />
+
+        <ImageButton
+            android:id="@+id/SaveB"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ok" />
+
+    </RelativeLayout>
 </RelativeLayout>
 
 </ScrollView>

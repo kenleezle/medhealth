@@ -52,8 +52,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 			    	KEY_NAME + " TEXT," +     																
 			    	KEY_NOTI_ISACTIVE + " TEXT," +	
 			    	KEY_COLOR_PATH + " TEXT," +	
-			    	KEY_COMMENT + " TEXT," +	
 			    	KEY_IMG_PATH + " TEXT," +
+			    	KEY_COMMENT + " TEXT," +
 			    	KEY_TIMINGS_TABLE + " TEXT" +
 		    	")";
 		        

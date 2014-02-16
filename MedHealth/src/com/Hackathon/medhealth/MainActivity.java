@@ -70,10 +70,10 @@ public class MainActivity extends Activity
   AlarmManager alarmMgr;
   Calendar    calendar;
 
- 	static String smsNumber = "0503839984";
-	static   String caregiverNumber = "tel:0503839984";
-	MediaPlayer mp;
-	Timer t = new Timer();
+  static String smsNumber = "0503839984";
+  static   String caregiverNumber = "tel:0503839984";
+  MediaPlayer mp;
+  Timer t = new Timer();
 
 
  
@@ -117,7 +117,7 @@ public class MainActivity extends Activity
       }
     });
 
-		saveMe.setOnClickListener(new View.OnClickListener() {
+    saveMe.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
             	//t.schedule(new autoNotifyCaregiver(), 10000);
@@ -163,8 +163,10 @@ public class MainActivity extends Activity
     } catch (Exception e){}
     
     
+/*
     if (DB.getProfilesCount() > 0)
       EnableAllAlarams(getApplicationContext());  
+      */
     
     
     // Set Sensor + Manager
@@ -362,6 +364,5 @@ public class MainActivity extends Activity
 	     myManager.unregisterListener(mySensorListener);
 	     super.onStop();
 	    }
-
 
 }

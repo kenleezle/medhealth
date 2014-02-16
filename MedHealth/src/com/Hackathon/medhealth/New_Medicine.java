@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class New_Medicine extends Activity
 	EditText name, comment;
 	//DatabaseHandler DB;
 	// TimingsHandler	TH;
-	Button add, type, color, timing;
+	ImageButton add, type, color, timing;
 	AlertDialog.Builder color_builder, Type_builder, Timing_builder;
 	CharSequence colors[] = {"Red", "White", "purple", "Blue", "Yellow", "Green", "Brown"};
 	CharSequence Types[] = {"Pill", "Capsule", "injection", "Liquid", "Tablet"};
@@ -65,7 +66,7 @@ public class New_Medicine extends Activity
 		for(Timing N : MyTimings)
 			TH.addTiming(N, new_medicine.name);
 		
-		
+		/*
 		List<Medicine> MList = DB.getAllMedicines(context);
 		int request = 0;
 		for (Medicine t : MList)
@@ -79,10 +80,16 @@ public class New_Medicine extends Activity
 				calendar.set(Calendar.HOUR_OF_DAY,tt.Time_Hour);
 				calendar.set(Calendar.MINUTE, tt.Time_Min);
 				calendar.set(Calendar.SECOND, 0);
-				
-				
-				
+								
+        Bundle bundle = new Bundle();
+        bundle.putString("name", t.name);
+        bundle.putString("comment", t.comment);
+        bundle.putString("img_path", t.img_path);
+        bundle.putString("color_path", t.color_path);
+        bundle.putString("med_quantity", Integer.toString(tt.Med_quantity));
+        
 				intent = new Intent(context, Service_Medicine_time.class);
+        intent.putExtras(bundle);
 				alarmIntent = PendingIntent.getService(context, request , intent, 0);
 				
 				AlarmManager alarmMgr; 
@@ -91,6 +98,36 @@ public class New_Medicine extends Activity
 				request++;
 			}
 		}
+		*/
+
+		int Request = 0;
+		List<Timing> TList = new_medicine.get_timings(context);
+		for (Timing tt : TList)
+		{
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			calendar.set(Calendar.HOUR_OF_DAY,tt.Time_Hour);
+			calendar.set(Calendar.MINUTE, tt.Time_Min);
+			calendar.set(Calendar.SECOND, 0);
+							
+		    Bundle bundle = new Bundle();
+		    bundle.putString("name", new_medicine.name);
+		    bundle.putString("comment", new_medicine.comment);
+		    bundle.putString("img_path", new_medicine.img_path);
+		    bundle.putString("color_path", new_medicine.color_path);
+		    bundle.putString("med_quantity", Integer.toString(tt.Med_quantity));
+		    
+			intent = new Intent(context, Service_Medicine_time.class);
+			intent.putExtras(bundle);
+			alarmIntent = PendingIntent.getService(context, Request , intent, 0);
+			
+			AlarmManager alarmMgr; 
+			alarmMgr = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+			alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+			Request++;
+		}
+		
+		
 		Toast toast = Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT);
 		toast.show();
 			
@@ -106,10 +143,10 @@ public class New_Medicine extends Activity
 		//TH = new TimingsHandler(this);
 		name = (EditText) findViewById(R.id.text_name);
 		comment = (EditText) findViewById(R.id.comment);
-		timing = (Button) findViewById(R.id.btn_Timing);
-		color = (Button) findViewById(R.id.btn_color);
-		type = (Button) findViewById(R.id.btn_type);
-		add = (Button) findViewById(R.id.btn_add);
+		timing = (ImageButton) findViewById(R.id.btn_Timing);
+		color = (ImageButton) findViewById(R.id.btn_color);
+		type = (ImageButton) findViewById(R.id.btn_type);
+		add = (ImageButton) findViewById(R.id.btn_add);
 		
 		
 		
