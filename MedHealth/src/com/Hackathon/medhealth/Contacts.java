@@ -27,7 +27,7 @@ public class Contacts extends Activity implements OnItemClickListener{
 
 	String []ContactNames;     //={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
 
-	int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10}; 
+	int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10, R.drawable.img11, R.drawable.img12, R.drawable.img13}; 
 	
 	ListView l;
 	
@@ -79,13 +79,22 @@ public class Contacts extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
 		// TODO Auto-generated method stub
-		Intent k = new Intent(Contacts.this, contactinfodisplay.class);
-	     startActivity(k);
+		Intent m = new Intent(Contacts.this, contactinfodisplay.class);
+	     startActivity(m);
 		
 		String str=adapter.getItemAtPosition(position).toString(); //getting the names from the previous string
 		//Create here an intent to go to another activity.
 		//For now we will only display a toast (showing their names only
-		Toast.makeText(this, str, Toast.LENGTH_SHORT).show(); 
+		Toast.makeText(Contacts.this, str, Toast.LENGTH_SHORT).show(); 
+		
+		
+		l.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+			String item = (String) l.getItemAtPosition(position);     
+			
+			            }
+			        });
 		}
 	
 
