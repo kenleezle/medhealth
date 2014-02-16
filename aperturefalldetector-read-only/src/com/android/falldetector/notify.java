@@ -3,7 +3,7 @@ package com.android.falldetector;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.android.falldetector.areyouok.nextScreen;
+import com.Hackathon.medhealth.areyouok.nextScreen;
 
 import android.app.Activity;
 import android.content.Context;
