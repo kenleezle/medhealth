@@ -27,7 +27,7 @@ public class Contacts extends Activity implements OnItemClickListener{
 
 	String []ContactNames;//={"Mustafa", "Abdullah", "Yousef", "Saeed", "Omar", "Rashid", "Islam", "Akram", "Ken", "Ahmed", "Mohammed"};
 
-	int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10}; 
+	//int[] images={R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10}; 
 	
 	ListView l;
 	
@@ -58,7 +58,7 @@ public class Contacts extends Activity implements OnItemClickListener{
 			// TODO Auto-generated method stub
 			LayoutInflater inflater=(LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 			View row=inflater.inflate(R.layout.single_row, parent, false);
-			ImageView myImage= (ImageView) row.findViewById(R.id.imageView1);
+			ImageView myImage= (ImageView) row.findViewById(R.id.shape);
 			TextView myTitle= (TextView) row.findViewById(R.id.textView);
 			
 			return super.getView(position, convertView, parent);

@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/imgbtn_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -19,7 +19,7 @@
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageButton1"
+        android:layout_above="@+id/imgbtn_done"
         android:layout_alignParentLeft="true"
         android:alignmentMode="alignMargins"
         android:columnCount="3"
@@ -31,13 +31,13 @@
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="120dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
+            android:background="@drawable/prescription_icon"
             android:padding="0dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/prescription_icon" />
+            android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -61,7 +61,7 @@
     </GridLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/shape"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout1"

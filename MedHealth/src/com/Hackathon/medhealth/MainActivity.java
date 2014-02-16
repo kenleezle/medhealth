@@ -67,7 +67,7 @@ public class MainActivity extends Activity
 
 		});
 		// For now this is the save button. This should have its own button.
-	    ImageButton qr = (ImageButton) findViewById(R.id.imageButton1);
+	    ImageButton qr = (ImageButton) findViewById(R.id.imgbtn_done);
 		qr.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -90,9 +90,10 @@ public class MainActivity extends Activity
 			Service_Medicine_time.myMediaPlayer.stop();
 		} catch (Exception e){}
 		
-		
+		/*
 		if (DB.getProfilesCount() > 0)
 			EnableAllAlarams(getApplicationContext());	
+			*/
 	}
 	
 	

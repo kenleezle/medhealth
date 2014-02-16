@@ -170,9 +170,18 @@ public class New_Medicine extends Activity
 							calendar.set(Calendar.SECOND, 0);
 							
 							
+							Bundle bundle = new Bundle();
+							bundle.putString("name", t.name);
+							bundle.putString("comment", t.comment);
+							bundle.putString("img_path", t.img_path);
+							bundle.putString("color_path", t.color_path);
+							bundle.putString("med_quantity", Integer.toString(tt.Med_quantity));
 							
 							intent = new Intent(getApplicationContext(), Service_Medicine_time.class);
+							intent.putExtras(bundle);
 							alarmIntent = PendingIntent.getService(getApplicationContext(), request , intent, 0);
+							
+							
 							
 							AlarmManager alarmMgr; 
 							alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
